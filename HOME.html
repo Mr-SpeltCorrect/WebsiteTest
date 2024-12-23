@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>TestSite</title>
+        <style>
+            body {
+                margin: 0;
+                height: 200vh; /* To allow scrolling */
+            }
+            video {
+                position: Fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+            }
+            .glass {
+                position: relative;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 400px;
+                height: 200px;
+                background: rgba( 255, 255, 255, 0.3 );
+                box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+                backdrop-filter: blur( 3px );
+                -webkit-backdrop-filter: blur( 3px );
+                border-radius: 5%;
+                border: 1px solid rgba( 255, 255, 255, 0.18 );
+            }
+        </style>
+    </head>
+    <body>
+        
+        <video id="SCRVID" muted>
+            <source src="DC Flyover Hellocopter.mp4" type="video/mp4">
+        </video>
+        <div class = "glass">
+        </div>
+        <script>
+            const vid = document.getElementById('SCRVID');
+            vid.pause(); // Ensure video is paused initially
+
+            // Handle scrolling to update video frames
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY; // Current scroll position
+                const maxScroll = document.documentElement.scrollHeight - window.innerHeight; // Maximum scrollable area
+                const scrollFraction = scrollTop / maxScroll;
+
+                // Map scroll position to video playback
+                const videoDuration = vid.duration || 1; // Avoid NaN if video duration isn't loaded
+                vid.currentTime = scrollFraction * videoDuration;
+            });
+        </script>
+    </body>
+</html>
